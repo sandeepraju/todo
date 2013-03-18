@@ -59,7 +59,7 @@ def task(id=None):
 
     if id is None:
         if request.method == 'GET':
-            return json.dumps(database)
+            return json.dumps(database["data"])
         elif request.method == 'POST':
             data = json.loads(request.data)
             # No validation for now
