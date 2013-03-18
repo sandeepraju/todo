@@ -8,17 +8,19 @@
         <div>
             <h1>Todo List</h1>
             <ul>
-                
+                <% _.each(todo, function(task){ %>
+                     <li>
+                        <strong><%= task.todo %></strong> - (<%= task.priority %>) - [<%= task.completed %>]
+                        <a class="task-edit" href="#/edit/<%= task.id %>">edit</a>
+                        <a class="task-delete" href="#/delete/<%= task.id %>">delete</a>
+                    </li>
+                <%  }); %>   
             </ul>
             <span>(c) helloworld - 2013</span>
         </div>
     </script>
     <script type="text/template" id="taskTemplate">
-        <li>
-            <strong><%= todo %></strong> - (<%= priority %>) - [<%= completed %>]
-            <a class="task-edit" href="#/edit/<%= id %>">edit</a>
-            <a class="task-delete" href="#/delete/<%= id %>">delete</a>
-        </li>
+       
     </script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/underscore.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.js') }}"></script>

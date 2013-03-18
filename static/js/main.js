@@ -77,10 +77,6 @@
             vents.on("todo:show", this.show, this);
         },
 
-        // events: {
-        //     'click input.task-edit': 'edit'
-        // },
-
         // event handler
         show: function() {
             
@@ -89,13 +85,8 @@
         },
 
         render: function() {
-            var list = "";
-            this.collection.each(function(task){
-                var taskView = new window.App.Views.Task({ model:task })
-                list += taskView.render().$el.html();
-            }, this);
-            // console.log(this.$el.html());
-            this.$el.find("ul").html(list);
+            
+            this.$el.html(this.template({todo: this.collection.toJSON()}));
             return this;
         }
     });
