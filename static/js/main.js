@@ -42,8 +42,6 @@
 
         initialize: function() {
             log("inside init of todo collection");
-            // log("fetching");
-            // log(this.fetch());
         }
     });
 
@@ -51,7 +49,7 @@
     log("defining task view");
     // view for a single task
     window.App.Views.Task = Backbone.View.extend({
-        template : _.template($("#todoTemplate").html()),
+        template : _.template($("#taskTemplate").html()),
 
         initialize: function() {
             log("inside init of the task view");
@@ -71,7 +69,7 @@
     log("defining todo view");
     // view of a collection of tasks / todo
     window.App.Views.Todo = Backbone.View.extend({
-        template : _.template($("#taskTemplate").html()),
+        template : _.template($("#todoTemplate").html()),
 
         initialize: function() {
             // bind event handler to the custom show event
@@ -91,10 +89,13 @@
         },
 
         render: function() {
+            var list = "";
             this.collection.each(function(task){
                 var taskView = new window.App.Views.Task({ model:task })
-                this.$el.append(taskView.render().el);
+                list += taskView.render().$el.html();
             }, this);
+            // console.log(this.$el.html());
+            this.$el.find("ul").html(list);
             return this;
         }
     });
