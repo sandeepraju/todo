@@ -22,6 +22,17 @@
     <script type="text/template" id="taskTemplate">
        
     </script>
+    <script type="text/template" id="taskEditTemplate">
+       <div>
+            <label>Task</label><input class="edit-todo" type='text' name="<%= id %>" value="<%= todo %>" />
+            <br/>
+            <label>Task</label><input class='edit-priority' type='text' name="<%= id %>" value="<%= priority %>" />
+            <br/>
+            <label>Task</label><input class="edit-completed" type='text' name="<%= id %>" value="<%= completed %>" />
+            <br/>
+            <input type='button' class='edit-submit' value='save' />
+       </div>
+    </script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/underscore.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/backbone.js') }}"></script>

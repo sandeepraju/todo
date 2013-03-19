@@ -17,7 +17,7 @@
         Router: {}
     };
 
-    log("vents");
+    log("creating vents object");
     var vents = _.extend({}, Backbone.Events);
 
     log("defining tasks model");
@@ -28,6 +28,7 @@
             priority: 1,
             completed: false
         },
+        // url: "/api/task",
 
         initialize: function() {
 
@@ -53,11 +54,6 @@
 
         initialize: function() {
             log("inside init of the task view");
-            vents.on("task:edit", this.edit, this);
-        },
-
-        edit: function(id) {
-            log("editing the task");
         },
 
         render: function() {
@@ -75,18 +71,43 @@
             // bind event handler to the custom show event
             log("inside init of todo view");
             vents.on("todo:show", this.show, this);
+            vents.on("task:edit", this.edit, this);
         },
 
         // event handler
         show: function() {
             
             log("Showing Todo List");
-            $(document.body).append(this.render().el);
+            $(document.body).html(this.render().el);
+        },
+
+        // event handler
+        edit: function(id) {
+            log("task edit working! got id " + id);
+            var taskEditView = new window.App.Views.TaskEdit({model: this.collection.get(id)});
+            $(document.body).html(taskEditView.render().el);
+
+            // this.render(task).el);
         },
 
         render: function() {
             
             this.$el.html(this.template({todo: this.collection.toJSON()}));
+            return this;
+        }
+    });
+
+    log("defining task edit view");
+    window.App.Views.TaskEdit = Backbone.View.extend({
+        template: _.template($("#taskEditTemplate").html()),
+
+        initialize: function() {
+            log("inside init of task edit view");
+            // this.render();
+        },
+
+        render: function() {
+            this.$el.html(this.template(this.model.toJSON()));
             return this;
         }
     });
@@ -108,9 +129,9 @@
         },
 
         editTask: function(id) {
-            log("matched editTask route");
+            log("matched editTask route with id " + id);
             // called with task is being edited
-            vents.trigger("task:edit",id);
+            vents.trigger("task:edit", id);
         },
 
         deleteTask: function() {
@@ -128,7 +149,11 @@
     .done(function() {
         log("creating view for the collection")
         todoView = new window.App.Views.Todo({collection: todoCollection});
-        // todoView.show();
+        
+
+        log("creating task edit view");
+        taskEdit = new window.App.Views.TaskEdit;
+
         log("creating router");
         new window.App.Router.Todo;  // Create the router object
         Backbone.history.start();
