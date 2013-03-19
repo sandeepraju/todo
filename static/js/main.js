@@ -106,9 +106,25 @@
             // this.render();
         },
 
+        events: {
+            'click input.edit-submit': 'taskEditSubmit'
+        },
+
+        taskEditSubmit: function() {
+            this.model.save({
+                todo: "SAVED",
+                priority: 5,
+                completed: true
+            });
+            this.remove();
+            // vents.trigger("todo:show");
+            appRouter.navigate('', true);
+        },
+
         render: function() {
             this.$el.html(this.template(this.model.toJSON()));
             return this;
+
         }
     });
    
@@ -155,7 +171,7 @@
         taskEdit = new window.App.Views.TaskEdit;
 
         log("creating router");
-        new window.App.Router.Todo;  // Create the router object
+        appRouter = new window.App.Router.Todo;  // Create the router object
         Backbone.history.start();
     });
 
